@@ -1,0 +1,33 @@
+.container {
+    margin: 0 auto;
+    min-width: 50vw;
+    max-width: 50rem;
+    height: 98vh;
+    background-color: pink;
+    display: grid;
+    grid-template-columns: 300px minmax(500px, auto);
+    gap: 1rem;
+    overflow-x: scroll;
+    overflow-y: hidden;
+}
+
+.left-panel {
+    background-color: blue;
+    opacity: 0.5;
+}
+
+.right-panel {
+    background-color: black;
+    display: grid;
+    grid-template-rows: 90vh auto;
+    gap: 1rem;
+    opacity: 0.5;
+}
+
+.object-image {
+    background-color: blueviolet;
+}
+
+.object-title {
+    background-color: aqua;
+}
