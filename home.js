@@ -26,26 +26,62 @@ async function populateDOM() {
     }
 }
 
+function setRightPanel(item) {
+    imgURL = item.querySelector('img').src;
+    itemTitle = item.querySelector('p').innerHTML;
+    console.log(itemTitle);
+    const imgPanel = document.querySelector(".object-image");
+    imgPanel.setAttribute('style', `background-image: url(${imgURL})`);
+    let textBox = document.querySelector(".object-title input");
+    textBox.setAttribute('value', itemTitle);
+    console.log(textBox.value);
+    item.classList.add("selected");
+}
+
+
 const jsonPromise = populateDOM();
 jsonPromise
     .then ( function() {
-        let inputElem = document.querySelector("ul").firstChild;
-        console.log(inputElem);
-        inputElem.focus();
-        imgURL = inputElem.querySelector('img').src;
-        const imgPanel = document.querySelector(".object-image");
-        imgPanel.setAttribute('style', `background-image: url(${imgURL})`);
+        let item = document.querySelector("ul").firstChild;
+        setRightPanel(item);
     })
     .then( function () {
         document.querySelectorAll('.list-item').forEach(item => {
             item.addEventListener('focus', event => {
-                imgURL = item.querySelector('img').src;
-                itemTitle = item.querySelector('p').innerHTML;
-                const imgPanel = document.querySelector(".object-image");
-                imgPanel.setAttribute('style', `background-image: url(${imgURL})`);
-                const textBox = document.querySelector(".object-title input");
-                textBox.nodeValue = itemTitle;
+                let prevItem = document.querySelector(".selected");
+                prevItem.classList.remove("selected");
+                setRightPanel(item);
             })
+        })
+    })
+    .then( function() {
+        document.querySelector('.object-title input').addEventListener('input', (event) => {
+            let currItem = document.querySelector(".selected");
+            currItem.querySelector('p').innerHTML = event.target.value;
+            setRightPanel(currItem);
+        })
+    })
+    .then(function() {
+        document.addEventListener('keydown', function(event) {
+            let currItem = document.querySelector(".selected");
+            let currIndex = currItem.tabIndex;
+            let list = document.querySelectorAll(".list-item");
+            let length = list.length;
+            if(event.which === 40){
+                currIndex++;
+                if(currIndex>length){
+                    currIndex = 1;
+                }
+                currItem.classList.remove("selected");
+                setRightPanel(list[currIndex-1]);
+            } else if(event.which === 38) {
+                currIndex--;
+                if(currIndex<=0){
+                    currIndex = length;
+                }
+                currItem.classList.remove("selected");
+                setRightPanel(list[currIndex-1]);
+            }
         })
     })
 
