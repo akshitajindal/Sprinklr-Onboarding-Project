@@ -3,7 +3,6 @@
     min-width: 50vw;
     max-width: 50rem;
     height: 98vh;
-    background-color: white;
     display: grid;
     grid-template-columns: 300px minmax(500px, auto);
     overflow-x: scroll;
@@ -11,7 +10,6 @@
 }
 
 .left-panel {
-    background-color: white;
     margin-right: 1rem;
 }
 
@@ -47,21 +45,15 @@
 }
 
 .right-panel {
-    background-color: white;
     display: grid;
     grid-template-rows: 90vh auto;
 }
 
 .object-image {
-    background-color: white;
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
     margin-bottom: 1rem;
-}
-
-.object-title {
-    background-color: white;
 }
 
 .object-title input {

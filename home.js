@@ -29,12 +29,10 @@ async function populateDOM() {
 function setRightPanel(item) {
     imgURL = item.querySelector('img').src;
     itemTitle = item.querySelector('p').innerHTML;
-    console.log(itemTitle);
     const imgPanel = document.querySelector(".object-image");
     imgPanel.setAttribute('style', `background-image: url(${imgURL})`);
     let textBox = document.querySelector(".object-title input");
-    textBox.setAttribute('value', itemTitle);
-    console.log(textBox.value);
+    textBox.value = itemTitle;
     item.classList.add("selected");
 }
 
@@ -58,7 +56,6 @@ jsonPromise
         document.querySelector('.object-title input').addEventListener('input', (event) => {
             let currItem = document.querySelector(".selected");
             currItem.querySelector('p').innerHTML = event.target.value;
-            setRightPanel(currItem);
         })
     })
     .then(function() {
