@@ -3,29 +3,61 @@
     min-width: 50vw;
     max-width: 50rem;
     height: 98vh;
-    background-color: pink;
+    background-color: white;
     display: grid;
     grid-template-columns: 300px minmax(500px, auto);
     gap: 1rem;
     overflow-x: scroll;
-    overflow-y: hidden;
+    overflow-y: scroll;
 }
 
 .left-panel {
+    background-color: white;
+}
+
+.left-panel li {
+    list-style: none;
+    cursor: pointer;
+}
+
+.left-panel li:focus{
     background-color: blue;
-    opacity: 0.5;
+    color: white;
+    padding: 0.2rem;
+    border-radius: 0.3rem;
+}
+
+.left-panel li div {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.left-panel li div p {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.left-panel li div img {
+    width: 2vw;
+    height: 4vh;
+    object-fit: cover;
+    border-radius: 10%;
 }
 
 .right-panel {
-    background-color: black;
+    background-color: white;
     display: grid;
     grid-template-rows: 90vh auto;
     gap: 1rem;
-    opacity: 0.5;
 }
 
 .object-image {
-    background-color: blueviolet;
+    background-color: white;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
 }
 
 .object-title {
