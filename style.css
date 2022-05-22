@@ -1,3 +1,4 @@
+/* Main centered container which has left and right panels as grid element with the column width specified. */
 .container {
     margin: 0 auto;
     min-width: 50vw;
@@ -34,12 +35,14 @@
     border-radius: 0.3rem;
 }
 
+/* Each div element contains and img element and a paragraph element. They are displayed as flex items. */
 .left-panel ul li div {
     display: flex;
     gap: 1rem;
     align-items: center;
 }
 
+/* Hiding text overflow for pararaph elements inside list items. */
 .left-panel ul li div p {
     white-space: nowrap;
     overflow: hidden;
@@ -52,6 +55,7 @@
     border-radius: 10%;
 }
 
+/* Right panel contains the image and title of the selected list item. They act as grid elements with the row heights specified. */
 .right-panel {
     display: grid;
     grid-template-rows: 90vh auto;
