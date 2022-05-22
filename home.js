@@ -11,7 +11,8 @@ async function populateDOM() {
             let imgItem = document.createElement("img");
             let titleText = document.createElement("p");
             imgItem.src = json[i].previewImage;
-            titleText.innerHTML = json[i].title;
+            titleText.innerHTML = clip(json[i].title);
+            titleText.setAttribute('data-text', json[i].title);
             divItem.append(imgItem);
             divItem.append(titleText);
             listItem.append(divItem);
@@ -26,9 +27,16 @@ async function populateDOM() {
     }
 }
 
+function clip(text) {
+    if(text.length>20){
+        return text.slice(0,10)+"..." + text.slice(-10);
+    }
+    return text;
+}
+
 function setRightPanel(item) {
     imgURL = item.querySelector('img').src;
-    itemTitle = item.querySelector('p').innerHTML;
+    itemTitle = item.querySelector('p').getAttribute('data-text');
     const imgPanel = document.querySelector(".object-image");
     imgPanel.setAttribute('style', `background-image: url(${imgURL})`);
     let textBox = document.querySelector(".object-title input");
@@ -55,7 +63,8 @@ jsonPromise
     .then( function() {
         document.querySelector('.object-title input').addEventListener('input', (event) => {
             let currItem = document.querySelector(".selected");
-            currItem.querySelector('p').innerHTML = event.target.value;
+            currItem.querySelector('p').setAttribute('data-text', event.target.value);
+            currItem.querySelector('p').innerHTML = clip(event.target.value);
         })
     })
     .then(function() {

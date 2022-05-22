@@ -31,12 +31,6 @@
     align-items: center;
 }
 
-.left-panel li div p {
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-}
-
 .left-panel li div img {
     width: 2vw;
     height: 4vh;
