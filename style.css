@@ -10,30 +10,44 @@
 }
 
 .left-panel {
-    margin-right: 1rem;
+    margin-inline-end: 1rem;
 }
 
-.left-panel li {
+.left-panel ul {
+    padding: 0;
+}
+
+.left-panel ul li {
     list-style: none;
     cursor: pointer;
+    padding: 1vh 0;
 }
 
-.left-panel .selected{
+.left-panel ul li:focus {
+    outline: none;
+}
+
+.left-panel ul .selected{
     background-color: blue;
     color: white;
-    padding: 0.2rem;
+    padding: 0.3rem;
     border-radius: 0.3rem;
 }
 
-.left-panel li div {
+.left-panel ul li div {
     display: flex;
     gap: 1rem;
     align-items: center;
 }
 
-.left-panel li div img {
-    width: 2vw;
-    height: 4vh;
+.left-panel ul li div p {
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.left-panel ul li div img {
+    width: 3rem;
+    height: 3rem;
     object-fit: cover;
     border-radius: 10%;
 }
@@ -43,15 +57,17 @@
     grid-template-rows: 90vh auto;
 }
 
-.object-image {
+.right-panel .object-image {
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    margin-bottom: 1rem;
+    margin-block-end: 1rem;
 }
 
-.object-title input {
+.right-panel .object-title input {
     width: 100%;
-    height: 90%;
+    height: 50%;
     text-align: center;
+    border-color: transparent;
+    box-sizing: border-box;
 }

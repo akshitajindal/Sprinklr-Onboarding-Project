@@ -74,14 +74,14 @@ const keydownNavigation = function() {
         let currIndex = currItem.tabIndex;
         let list = document.querySelectorAll(".list-item");
         let length = list.length;
-        if(event.which === 40){
+        if(event.key === "ArrowDown"){
             currIndex++;
             if(currIndex>length){
                 currIndex = 1;
             }
             currItem.classList.remove("selected");
             setRightPanel(list[currIndex-1]);
-        } else if(event.which === 38) {
+        } else if(event.key === "ArrowUp") {
             currIndex--;
             if(currIndex<=0){
                 currIndex = length;
