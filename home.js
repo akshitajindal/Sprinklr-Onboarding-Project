@@ -1,4 +1,4 @@
-async function populateDOM() {
+const populateDOM = async function() {
     try {
         const response = await fetch("data.json");
         const json = await response.json();
@@ -27,14 +27,14 @@ async function populateDOM() {
     }
 }
 
-function clip(text) {
+const clip = function(text) {
     if(text.length>20){
         return text.slice(0,10)+"..." + text.slice(-10);
     }
     return text;
 }
 
-function setRightPanel(item) {
+const setRightPanel = function(item) {
     imgURL = item.querySelector('img').src;
     itemTitle = item.querySelector('p').getAttribute('data-text');
     const imgPanel = document.querySelector(".object-image");
@@ -44,52 +44,60 @@ function setRightPanel(item) {
     item.classList.add("selected");
 }
 
+const focusOnLoad = function() {
+    let item = document.querySelector("ul").firstChild;
+    setRightPanel(item);
+}
+
+const setFocusOnListElements = function () {
+    document.querySelectorAll('.list-item').forEach(item => {
+        item.addEventListener('focus', event => {
+            let prevItem = document.querySelector(".selected");
+            prevItem.classList.remove("selected");
+            setRightPanel(item);
+        })
+    })
+}
+
+const updateTitle = function() {
+    document.querySelector('.object-title input').addEventListener('input', (event) => {
+        let currItem = document.querySelector(".selected");
+        let textElem = currItem.querySelector('p');
+        textElem.setAttribute('data-text', event.target.value);
+        textElem.innerHTML = clip(event.target.value);
+    })
+}
+
+const keydownNavigation = function() {
+    window.addEventListener('keydown', function(event) {
+        let currItem = document.querySelector(".selected");
+        let currIndex = currItem.tabIndex;
+        let list = document.querySelectorAll(".list-item");
+        let length = list.length;
+        if(event.which === 40){
+            currIndex++;
+            if(currIndex>length){
+                currIndex = 1;
+            }
+            currItem.classList.remove("selected");
+            setRightPanel(list[currIndex-1]);
+        } else if(event.which === 38) {
+            currIndex--;
+            if(currIndex<=0){
+                currIndex = length;
+            }
+            currItem.classList.remove("selected");
+            setRightPanel(list[currIndex-1]);
+        }
+    })
+}
 
 const jsonPromise = populateDOM();
 jsonPromise
-    .then ( function() {
-        let item = document.querySelector("ul").firstChild;
-        setRightPanel(item);
-    })
-    .then( function () {
-        document.querySelectorAll('.list-item').forEach(item => {
-            item.addEventListener('focus', event => {
-                let prevItem = document.querySelector(".selected");
-                prevItem.classList.remove("selected");
-                setRightPanel(item);
-            })
-        })
-    })
-    .then( function() {
-        document.querySelector('.object-title input').addEventListener('input', (event) => {
-            let currItem = document.querySelector(".selected");
-            currItem.querySelector('p').setAttribute('data-text', event.target.value);
-            currItem.querySelector('p').innerHTML = clip(event.target.value);
-        })
-    })
-    .then(function() {
-        document.addEventListener('keydown', function(event) {
-            let currItem = document.querySelector(".selected");
-            let currIndex = currItem.tabIndex;
-            let list = document.querySelectorAll(".list-item");
-            let length = list.length;
-            if(event.which === 40){
-                currIndex++;
-                if(currIndex>length){
-                    currIndex = 1;
-                }
-                currItem.classList.remove("selected");
-                setRightPanel(list[currIndex-1]);
-            } else if(event.which === 38) {
-                currIndex--;
-                if(currIndex<=0){
-                    currIndex = length;
-                }
-                currItem.classList.remove("selected");
-                setRightPanel(list[currIndex-1]);
-            }
-        })
-    })
+    .then (focusOnLoad)
+    .then(setFocusOnListElements)
+    .then(updateTitle)
+    .then(keydownNavigation)
 
 
 
