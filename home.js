@@ -25,7 +25,7 @@ const populateDOM = async function() {
         panel.append(itemsList); //appending the unordered list into the DOM
         document.querySelectorAll('.list-item div p').forEach(elem => {
             let widthAvailable = elem.getBoundingClientRect().width;
-            elem.querySelector('span').innerHTML = clip(elem.getAttribute('data-text'), widthAvailable); //clipping the title so as to get ellipses on text overflow in the middle of the title
+            elem.querySelector('span').innerHTML = clip(elem.getAttribute('data-text'), widthAvailable, elem); //clipping the title so as to get ellipses on text overflow in the middle of the title
         })
         return json;
     } catch (error) {
@@ -34,8 +34,11 @@ const populateDOM = async function() {
 }
 
 //function to clip text so as to get ellipses on text-overflow in the middle of the text
-const clip = function(text, maxWidth) {
-    //console.log(maxWidth);
+const clip = function(text, maxWidth, elem) {
+    // let tempSpan = elem.querySelector('span')
+    // tempSpan.innerHTML = text;
+    // console.log(tempSpan.getBoundingClientRect().width);
+    // console.log(text);
     if(text.length>20){
         return text.slice(0,10)+"..." + text.slice(-10);
     }
@@ -80,7 +83,7 @@ const updateTitle = function() {
         let spanElem = textElem.querySelector('span');
         textElem.setAttribute('data-text', event.target.value);
         let widthAvailable = textElem.getBoundingClientRect().width;
-        spanElem.innerHTML = clip(event.target.value, widthAvailable); //clipping the title to take care of text overflow
+        spanElem.innerHTML = clip(event.target.value, widthAvailable, textElem); //clipping the title to take care of text overflow
     })
 }
 
