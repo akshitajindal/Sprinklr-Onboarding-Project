@@ -35,12 +35,28 @@ const populateDOM = async function() {
 
 //function to clip text so as to get ellipses on text-overflow in the middle of the text
 const clip = function(text, maxWidth, elem) {
-    // let tempSpan = elem.querySelector('span')
-    // tempSpan.innerHTML = text;
-    // console.log(tempSpan.getBoundingClientRect().width);
-    // console.log(text);
-    if(text.length>20){
-        return text.slice(0,10)+"..." + text.slice(-10);
+    let spanElem = elem.querySelector('span')
+    spanElem.innerHTML = text;
+    let currWidth = spanElem.getBoundingClientRect().width;
+    if(currWidth>maxWidth){
+        text = text.split("");
+        let len = text.length;
+        if(len%2==0){
+            text.splice(len/2-1, 2, '...');
+        } else {
+            text.splice(Math.floor(len/2), 1, '...');
+        }
+        text = text.join("");
+        spanElem.innerHTML = text;
+        currWidth = spanElem.getBoundingClientRect().width;
+    }
+    while(currWidth>=maxWidth){
+        text = text.split('...').join("").split("");
+        let len = text.length;
+        text.splice(len/2-1, 2, '...')
+        text = text.join("");
+        spanElem.innerHTML = text;
+        currWidth = spanElem.getBoundingClientRect().width;
     }
     return text;
 }
