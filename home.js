@@ -6,14 +6,15 @@ const populateDOM = async function() {
         const panel = document.querySelector(".left-panel");
         let itemsList = document.createElement("ul");  //making an unordered list
         for(let i=0; i<json.length; i++){
-            //each list element contains a div and each div element contains an img and it's title in a paragraph element
+            //each list element contains a div and each div element contains an img and it's title in a span tag inside a paragraph element
             let listItem = document.createElement("li");
             let divItem = document.createElement("div");
             let imgItem = document.createElement("img");
             let titleText = document.createElement("p");
+            let titleSpan = document.createElement("span");
             imgItem.src = json[i].previewImage;
-            titleText.innerHTML = clip(json[i].title); //clipping the title so as to get ellipses on text overflow in the middle of the title
             titleText.setAttribute('data-text', json[i].title);
+            titleText.append(titleSpan);
             divItem.append(imgItem);
             divItem.append(titleText);
             listItem.append(divItem);
@@ -22,6 +23,10 @@ const populateDOM = async function() {
             itemsList.append(listItem);
         }
         panel.append(itemsList); //appending the unordered list into the DOM
+        document.querySelectorAll('.list-item div p').forEach(elem => {
+            let widthAvailable = elem.getBoundingClientRect().width;
+            elem.querySelector('span').innerHTML = clip(elem.getAttribute('data-text'), widthAvailable); //clipping the title so as to get ellipses on text overflow in the middle of the title
+        })
         return json;
     } catch (error) {
         console.error(`Could not fetch data: ${error}`);
@@ -29,7 +34,8 @@ const populateDOM = async function() {
 }
 
 //function to clip text so as to get ellipses on text-overflow in the middle of the text
-const clip = function(text) {
+const clip = function(text, maxWidth) {
+    //console.log(maxWidth);
     if(text.length>20){
         return text.slice(0,10)+"..." + text.slice(-10);
     }
@@ -71,8 +77,10 @@ const updateTitle = function() {
     document.querySelector('.object-title input').addEventListener('input', (event) => {
         let currItem = document.querySelector(".selected");
         let textElem = currItem.querySelector('p');
+        let spanElem = textElem.querySelector('span');
         textElem.setAttribute('data-text', event.target.value);
-        textElem.innerHTML = clip(event.target.value); //clipping the title to take care of text overflow
+        let widthAvailable = textElem.getBoundingClientRect().width;
+        spanElem.innerHTML = clip(event.target.value, widthAvailable); //clipping the title to take care of text overflow
     })
 }
 

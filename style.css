@@ -21,7 +21,7 @@
 .left-panel ul li {
     list-style: none;
     cursor: pointer;
-    padding: 1vh 0;
+    padding: 1vh 0.3rem;
 }
 
 .left-panel ul li:focus {
@@ -31,7 +31,6 @@
 .left-panel ul .selected{
     background-color: blue;
     color: white;
-    padding: 0.3rem;
     border-radius: 0.3rem;
 }
 
@@ -46,6 +45,7 @@
 .left-panel ul li div p {
     white-space: nowrap;
     overflow: hidden;
+    width: calc(100% - 4rem);
 }
 
 .left-panel ul li div img {
